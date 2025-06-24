@@ -30,13 +30,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-g8i9qfkkjpf)c4=!g^31t_xm2)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['webserver']
-
-DATABASES = {
-    'default': dj_database_url.config(
-        default=
-    )
-}
+ALLOWED_HOSTS = ['webserver', 'http://127.0.0.1:8000/', 'https://hexlet-code-x97y.onrender.com']
 
 
 # Application definition
@@ -86,10 +80,10 @@ WSGI_APPLICATION = "task_manager.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(
+        default=os.getenv("DATABASE_URL"),
+        conn_max_age=600
+    )
 }
 
 
@@ -128,7 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
