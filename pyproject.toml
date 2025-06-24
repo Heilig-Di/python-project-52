@@ -12,7 +12,8 @@ dependencies = [
     "dj-database-url==2.1.0",
     "ruff>=0.9.7",
     "gunicorn>=21.0.0",
-    "python-dotenv>=1.0.0"
+    "python-dotenv>=1.0.0",
+    "psycopg2-binary>=2.9.9"
 ]
 
 [build-system]
@@ -35,5 +36,6 @@ dev = [
     "dj-database-url==2.1.0",
     "ruff>=0.9.7",
     "gunicorn>=21.0.0",
-    "python-dotenv>=1.0.0"
+    "python-dotenv>=1.0.0",
+    "psycopg2-binary>=2.9.9"
 ]

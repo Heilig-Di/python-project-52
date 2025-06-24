@@ -1,5 +1,5 @@
 build:
-	./build.sh
+	chmod +x ./build.sh && ./build.sh
 install:
 	uv pip install .
 collectstatic:

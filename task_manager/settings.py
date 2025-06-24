@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-g8i9qfkkjpf)c4=!g^31t_xm2)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['webserver', 'http://127.0.0.1:8000/', 'https://hexlet-code-x97y.onrender.com']
+ALLOWED_HOSTS = ['webserver', '127.0.0.1:8000', 'localhost', 'hexlet-code-x97y.onrender']
 
 
 # Application definition
@@ -81,7 +81,7 @@ WSGI_APPLICATION = "task_manager.wsgi.application"
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL"),
+        default="DATABASE_URL",
         conn_max_age=600
     )
 }
