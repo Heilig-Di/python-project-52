@@ -1,7 +1,7 @@
 build:
 	chmod +x ./build.sh && ./build.sh
 install:
-	. .venv/bin/activate && uv pip install -e .
+	. .venv/bin/activate && uv sync
 collectstatic:
 	python3 manage.py collectstatic --noinput
 migrate:
