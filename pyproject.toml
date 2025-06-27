@@ -1,7 +1,7 @@
 [project]
 name = "task_manager"
 version = "0.1.0"
-description = ""
+description = "Task manager"
 authors = [
 	{ name = "Захарчук Диана", email = "heilig1996@mail.ru" }
 ]
@@ -16,8 +16,19 @@ dependencies = [
 ]
 
 [build-system]
-requires = ["setuptools>=68.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+include = [
+    "task_manager/**/*",
+    "manage.py",
+    "static/**/*",
+    "templates/**/*"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["task_manager"]
 
 [project.optional-dependencies]
 dev = [
