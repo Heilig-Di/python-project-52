@@ -9,6 +9,6 @@ migrate:
 lint:
 	uv run ruff check
 render-start:
-	uv run gunicorn task_manager.wsgi
+	gunicorn task_manager.wsgi
 
 .PHONY: install build collectstatic migrate lint render-start
