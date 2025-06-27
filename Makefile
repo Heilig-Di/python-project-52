@@ -1,14 +1,14 @@
-build:
-	chmod +x ./build.sh && ./build.sh
 install:
-	uv pip install hatchling && uv pip install -e .
+	uv sync
+build:
+	./build.sh
 collectstatic:
-	python3 manage.py collectstatic --noinput
+	uv run python3 manage.py collectstatic --noinput
 migrate:
-	python3 manage.py migrate
+	uv run python3 manage.py migrate
 lint:
 	uv run ruff check
 render-start:
-	gunicorn task_manager.wsgi:application
+	uv run gunicorn task_manager.wsgi
 
-.PHONY: build install collectstatic migrate lint render-start
+.PHONY: install build collectstatic migrate lint render-start
