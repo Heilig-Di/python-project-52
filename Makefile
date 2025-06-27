@@ -1,7 +1,7 @@
 build:
 	chmod +x ./build.sh && ./build.sh
 install:
-	. .venv/bin/activate && uv sync
+	. .venv/bin/activate && uv pip install -e .
 collectstatic:
 	python3 manage.py collectstatic --noinput
 migrate:
@@ -9,6 +9,6 @@ migrate:
 lint:
 	uv run ruff check
 render-start:
-	gunicorn task_manager.wsgi
+	gunicorn task_manager.wsgi:application
 
 .PHONY: build install collectstatic migrate lint render-start

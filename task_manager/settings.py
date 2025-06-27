@@ -15,8 +15,8 @@ from dotenv import load_dotenv
 import dj_database_url
 import os
 
-load_dotenv()
 
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-g8i9qfkkjpf)c4=!g^31t_xm2)_&#v*j8p%l1v%xt4%jxd**zv")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", False) == "True"
 
-ALLOWED_HOSTS = ['webserver', '127.0.0.1:8000', 'localhost', 'hexlet-code-x97y.onrender']
+ALLOWED_HOSTS = ['webserver', '127.0.0.1:8000', 'localhost', 'hexlet-code-x97y.onrender', '*']
 
 
 # Application definition
@@ -80,8 +80,14 @@ WSGI_APPLICATION = "task_manager.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": dj_database_url.parse(os.getenv('DATABASE_URL'))
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.path.join(BASE_DIR, "hexlet-code-db"),
+    }
 }
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES["default"].update(db_from_env)
 
 
 # Password validation
@@ -119,7 +125,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
