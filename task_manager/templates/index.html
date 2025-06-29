@@ -1,23 +1,24 @@
 {% extends "task_manager/base.html" %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 
 {% block bootstrap5_content %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light ms-3">
-  <a class="navbar-brand" href="/">Менеджер задач</a>
+  <a class="navbar-brand" href="/">{% translate "Менеджер задач" %}</a>
   <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
     <ul class="navbar-nav me-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/users/">Пользователи</a>
+        <a class="nav-link" href="/users/">{% translate "Пользователи" %}</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="/login/">Вход</a>
+        <a class="nav-link" href="/login/">{% translate "Вход" %}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/users/create/">Регистрация</a>
+        <a class="nav-link" href="/users/create/">{% translate "Регистрация" %}</a>
       </li>
 
     </ul>
@@ -28,10 +29,10 @@
   
   <div class="card">
     <div class="card-body p-5 bg-light">
-      <div class="display-4">Привет от Хекслета!</div>
-      <p class="lead">Практические курсы по программированию</p>
+      <div class="display-4">{% translate "Привет от Хекслета!" %}</div>
+      <p class="lead">{% translate "Практические курсы по программированию" %}</p>
       <hr>
-      <a class="btn btn-primary btn-lg" href="https://ru.hexlet.io">Узнать больше</a>
+      <a class="btn btn-primary btn-lg" href="https://ru.hexlet.io">{% translate "Узнать больше" %}</a>
     </div>
   </div> 
 </div>

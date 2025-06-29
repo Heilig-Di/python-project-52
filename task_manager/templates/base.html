@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 {% load django_bootstrap5 %}
 {% load i18n %}
+
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>{% block bootstrap5_title %}Менеджер задач Hexlet{% endblock %}</title>
+    <title>{% block bootstrap5_title %}{% translate "Менеджер задач Hexlet" %}{% endblock %}</title>
 
     {% bootstrap_css %}
     {% bootstrap_javascript %}
