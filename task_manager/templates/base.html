@@ -14,8 +14,32 @@
     {% block bootstrap5_extra_head %}{% endblock %}
   </head>
 
-  <body>   
-    {% block bootstrap5_content %}{% endblock %}
+  <body>
+ 
+    {% block bootstrap5_content %}
+
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/users/">{% translate "Пользователи" %}</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/login/">{% translate "Вход" %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/users/create/">{% translate "Регистрация" %}</a>
+          </li>
+
+        </ul>
+      </div>
+    </nav>
+
+    {% endblock %}
+
     <footer>
       <div class="container my-5 pt-4 border-top">
         <a target="_blank" href="https://ru.hexlet.io">Hexlet</a>
