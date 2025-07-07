@@ -2,64 +2,93 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
 
-<html lang="en">
-  <head>
+<html lang="ru">
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <title>{% block bootstrap5_title %}{% translate "Менеджер задач Hexlet" %}{% endblock %}</title>
-
+    
     {% bootstrap_css %}
     {% bootstrap_javascript %}
-    {% block bootstrap5_extra_head %}{% endblock %}
-  </head>
-
-  <body>
- 
-    {% block bootstrap5_content %}
-
-      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/users/">{% translate "Пользователи" %}</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="/login/">{% translate "Вход" %}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/users/create/">{% translate "Регистрация" %}</a>
-          </li>
-
-        </ul>
-      </div>
-    </nav>
-
-    {% endblock %}
-
-    <footer>
-      <div class="container my-5 pt-4 border-top">
-        <a target="_blank" href="https://ru.hexlet.io">Hexlet</a>
-      </div>
-    </footer>
-
+    
     <style>
-      body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-      }
-
-      footer {
-        margin-top: auto;
-      }
-
-      html, body {
-        height: 100%;
-      }
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content-wrapper {
+            flex: 1 0 auto;
+        }
+        .footer {
+            flex-shrink: 0;
+        }
     </style>
-  </body>
+    
+    {% block bootstrap5_extra_head %}{% endblock %}
+
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        <nav class="navbar navbar-expand-md navbar-light bg-light mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'index' %}">{% translate "Менеджер задач" %}</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users:list' %}">{% translate "Пользователи" %}</a>
+                        </li>
+                        
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'statuses:list' %}">{% translate "Статусы" %}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'labels:list' %}">{% translate "Метки" %}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'tasks:list' %}">{% translate "Задачи" %}</a>
+                            </li>
+                            <li class="nav-item">
+                                <form action="{% url 'logout' %}" method="post">
+                                    {% csrf_token %}
+                                    <input class="btn nav-link" type="submit" value='{% translate "Выход" %}'>
+                                </form>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">{% translate "Вход" %}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'users:create' %}">{% translate "Регистрация" %}</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="content-wrapper">
+        <main class="container">
+            {% bootstrap_messages %}
+            
+            {% block bootstrap5_content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <a target="_blank" href="https://ru.hexlet.io">Hexlet</a>
+        </div>
+    </footer>
+</body>
 </html>
