@@ -16,7 +16,7 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from task_manager.views import HomeView
 from task_manager.users.views import UserListView
 
@@ -24,5 +24,8 @@ from task_manager.users.views import UserListView
 urlpatterns = [
     path("", HomeView.as_view(), name='index'),
     path("admin/", admin.site.urls),
-    path("users/", UserListView.as_view(), name='users'),
+    path("users/", include('task_manager.users.urls', namespace='users')),
+    path("statuses/", include('task_manager.statuses.urls', namespace='statuses')),
+    path("labels/", include('task_manager.labels.urls', namespace='labels')),
+    path("tasks/", include('task_manager.tasks.urls', namespace='tasks')),
 ]
