@@ -6,6 +6,13 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'password1', 'password2']
+        labels = {
+            'username': 'Имя пользователя',
+            'first_name': 'Имя',
+            'last_name': 'Фамилия',
+            'password1': 'Пароль',
+            'password2': 'Подтверждение пароля',
+        }
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
