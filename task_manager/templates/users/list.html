@@ -20,11 +20,13 @@
       <td>{{ user.id }}</td>    
       <td>{{ user.username }}</td>
       <td>{{ user.get_full_name }}</td>
-      <td>{{ user.date_joined }}</td>
+      <td>{{ user.date_joined|date:"d.m.Y H:i" }}</td>
       <td>
-          <a href="{% url 'users:update' user.id %}">{% translate "Изменить" %}</a>
+        {% if request.user.id == user.id %}
+          <a href="{% url 'users:update' user.id %}" class="btn btn-sm btn-primary">{% translate "Изменить" %}</a>
           <br>
-          <a href="{% url 'users:delete' user.id %}">{% translate "Удалить" %}</a>
+          <a href="{% url 'users:delete' user.id %}" class="btn btn-sm btn-danger">{% translate "Удалить" %}</a>
+        {% endif %}
       </td>
     </tr>
     {% endfor %}

@@ -41,12 +41,12 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'users:list' %}">{% translate "Пользователи" %}</a>
                         </li>
                         
-                        {% if user.is_authenticated %}
+                        {% if users_user.id.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'statuses:list' %}">{% translate "Статусы" %}</a>
                             </li>

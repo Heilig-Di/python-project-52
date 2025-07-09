@@ -4,13 +4,12 @@
 
 {% block bootstrap5_content %}
 <div class="container wrapper flex-grow-1">
-  <h1 class="my-4">{% translate "Регистрация" %}</h1>
+
+  <h1 class="my-4">{% translate "Изменение пользователя" %}</h1>
   <form method="post">
     {% csrf_token %}
     {% bootstrap_form form %}
-    <button type="submit" class="btn btn-primary">
-      {% translate "Зарегистрировать" %}
-    </button>
+    <button type="submit" class="btn btn-primary">{% translate "Изменить" %}</button>
   </form>
 </div>
 {% endblock %}
