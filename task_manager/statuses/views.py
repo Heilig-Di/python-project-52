@@ -1,3 +1,39 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
+from .models import Status
+from .forms import StatusForm
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class StatusListView(LoginRequiredMixin, ListView):
+    model = Status
+    template_name = 'statuses/list.html'
+    context_object_name = 'statuses'
 
 
+class StatusCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = Status
+    form_class = StatusForm
+    template_name = 'statuses/create.html'
+    success_url = reverse_lazy('statuses:list')
+    success_message = _('Статус успешно создан')
+
+
+class StatusUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Status
+    form_class = StatusForm
+    template_name = 'statuses/update.html'
+    success_url = reverse_lazy('statuses:list')
+    success_message = _('Статус успешно изменен')
+
+
+class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Status
+    template_name = 'statuses/delete.html'
+    success_message = _('Статус успешно удален')
+    success_url = reverse_lazy('statuses:list')
+    error_message = _('Невозможно удалить статус, потому что он используется')
+    error_url = redirect('statuses:list')
