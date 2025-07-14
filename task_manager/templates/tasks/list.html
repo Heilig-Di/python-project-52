@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block bootstrap5_content %}
+  <h1 class="my-4">{% translate "Задачи" %}</h1>
+  
+  <a href="{% url 'tasks:create' %}" class="btn btn-primary mb-3">
+    {% translate "Создать задачу" %}
+  </a>
+
+  <div class="mb-3 d-flex align-items-center">
+    {{ filter.form.own_tasks }}
+    <label for="{{ filter.form.own_tasks.auto_id }}" class="form-check-label ms-2">
+        {% translate "Только свои задачи" %}
+    </label>
+  </div>  
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>{% translate "Имя" %}</th>
+        <th>{% translate "Статус" %}</th>
+        <th>{% translate "Автор" %}</th>
+        <th>{% translate "Исполнитель" %}</th>
+        <th>{% translate "Дата создания" %}</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for task in tasks %}
+      <tr>
+        <td>{{ task.id }}</td>
+        <td><a href="{% url 'tasks:detail' task.pk %}">{{ task.name }}</a></td>
+        <td>{{ task.status.name }}</td>
+        <td>{{ task.author.get_full_name }}</td>
+        <td>{{ task.executor.get_full_name|default_if_none:"" }}</td>
+        <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
+        <td>
+          <a href="{% url 'tasks:update' task.pk %}" class="btn btn-sm btn-primary">
+            {% translate "Update" %}
+          </a>
+          <a href="{% url 'tasks:delete' task.pk %}" class="btn btn-sm btn-danger">
+            {% translate "Delete" %}
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
