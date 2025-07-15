@@ -1,9 +1,7 @@
-from django.shortcuts import render
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import User
 from django.urls import reverse_lazy
-from .forms import UserRegisterForm, UserUpdateForm, LoginForm
-from django.contrib.auth import login, logout
+from .forms import UserRegisterForm, UserUpdateForm
 
 
 class UserListView(ListView):
@@ -28,15 +26,3 @@ class UserDeleteView(DeleteView):
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users:list')
 
-class LoginView(FormView):
-    form_class = LoginForm
-    template_name = 'login.html'
-    success_url = reverse_lazy('index')
-    def form_valid(self, form):
-        login(self.request, form.get_user())
-        return super().form_valid(form)
-
-class LogoutView(FormView):
-    def post(self, request, *args, **kwargs):
-        logout(request)
-        return redirect('index')

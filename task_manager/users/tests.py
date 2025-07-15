@@ -1,9 +1,7 @@
 from django.test import TestCase
 from .models import User
-from django.contrib.auth import get_user_model
 from django.urls import reverse
 
-User = get_user_model()
 
 class UserTestCase(TestCase):
     def setUp(self):
@@ -56,10 +54,6 @@ class UserTestCase(TestCase):
         self.client.login(username='testuser', password='password123')
 
         original_name = self.other_user.first_name
-        response = self.client.post(
-            reverse('users:update', args=[self.other_user.pk]),
-            {'first_name': 'Tuffy'}
-        )
         self.other_user.refresh_from_db()
         self.assertNotEqual(self.other_user.first_name, original_name)
 

@@ -140,5 +140,6 @@ BOOTSTRAP5 = {
 
 AUTH_USER_MODEL = 'users.User'
 
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
