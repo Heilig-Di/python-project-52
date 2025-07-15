@@ -24,9 +24,9 @@
       <td>{{ user.date_joined|date:"d.m.Y H:i" }}</td>
       <td>
         {% if request.user.id == user.id %}
-          <a href="{% url 'users:update' user.id %}" class="btn btn-sm btn-primary">{% translate "Изменить" %}</a>
+          <a href="{% url 'users:update' user.id %}">{% translate "Изменить" %}</a>
           <br>
-          <a href="{% url 'users:delete' user.id %}" class="btn btn-sm btn-danger">{% translate "Удалить" %}</a>
+          <a href="{% url 'users:delete' user.id %}">{% translate "Удалить" %}</a>
         {% endif %}
       </td>
     </tr>
