@@ -1,9 +1,4 @@
 from django.test import TestCase
-from .models import Status
-from django.contrib.auth import get_user_model
-from django.urls import reverse
-
-from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from .models import Status
@@ -42,7 +37,7 @@ class StatusTestCase(TestCase):
 
 
     def test_status_delete(self):
-        self.client.login(username='testuser', password='testpass123')
+        self.client.login(username='testuser', password='password123')
         response = self.client.post(
             reverse('statuses:delete', args=[self.status.pk])
         )

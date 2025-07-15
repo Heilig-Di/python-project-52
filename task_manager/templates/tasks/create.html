@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block bootstrap5_content %}
+<h1 class="my-4"></h1>
+<form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" class="btn btn-primary" value="{{ Создать задачу }}">
+</form>
+{% endblock %}
