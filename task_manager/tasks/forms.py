@@ -16,4 +16,8 @@ class TaskForm(forms.ModelForm):
             'labels': forms.Textarea(attrs={'rows': 4}),
         }
 
-
+        def __init__(self, *args, **kwargs):
+            self.user = kwargs.pop('user', None)
+            super().__init__(*args, **kwargs)
+            self.fields['executor'].queryset = User.objects.all()
+            self.fields['status'].queryset = Status.objects.all()

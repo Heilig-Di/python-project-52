@@ -35,4 +35,4 @@ class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     success_message = _('Статус успешно удален')
     success_url = reverse_lazy('statuses:list')
     error_message = _('Невозможно удалить статус, потому что он используется')
-    error_url = redirect('statuses:list')
+    error_url = reverse_lazy('statuses:list')

@@ -1,19 +1,22 @@
 from django.shortcuts import redirect
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView
 from django.urls import reverse_lazy
-from django.contrib.auth import logout
-from task_manager.users.forms import LoginForm
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class HomeView(TemplateView):
     template_name = "index.html"
 
-class LoginView(FormView):
-    form_class = LoginForm
-    template_name = 'login.html'
-    success_url = reverse_lazy('index')
+class LoginView(SuccessMessageMixin, LoginView):
+    template_name = 'users/login.html'
+    success_message = "Вы залогинены"
+    next_page = reverse_lazy('index')
 
-class LogoutView(FormView):
-    def post(self, request, *args, **kwargs):
-        logout(request)
-        return redirect('index')
+class LogoutView(SuccessMessageMixin, LogoutView):
+    next_page = reverse_lazy('index')
+    success_message = "Вы разлогинены"
+
+    def dispatch(self, request, *args, **kwargs):
+        messages.info(request, self.success_message)
+        return super().dispatch(request, *args, **kwargs)
