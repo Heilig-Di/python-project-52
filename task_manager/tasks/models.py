@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from task_manager.statuses.models import Status
 from task_manager.users.models import User
+from task_manager.labels.models import Label
 
 class Task(models.Model):
     name = models.CharField(
@@ -20,7 +21,7 @@ class Task(models.Model):
         verbose_name=_('Статус')
     )
 
-    autor = models.ForeignKey(
+    author = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
         related_name='authored_tasks',
@@ -40,9 +41,11 @@ class Task(models.Model):
         verbose_name=_('Дата создания')
     )
 
-    labels = models.CharField(
-        max_length=255,
-        unique=True
+    labels = models.ManyToManyField(
+        Label,
+        related_name='tasks',
+        blank=True,
+        verbose_name='Метки'
     )
 
 
@@ -50,5 +53,5 @@ class Task(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Задача'
-        verbose_name_plural = 'Задачи'
+        verbose_name = _('Задача')
+        verbose_name_plural = _('Задачи')

@@ -3,9 +3,9 @@
 {% load i18n %}
 
 {% block bootstrap5_content %}
-<h1 class="mb-4">{% trans "Статусы" %}</h1>
+<h1 class="mb-4">{% translate "Статусы" %}</h1>
 
-<a href="{% url 'statuses:create' %}" class="btn btn-primary mb-3">{% trans "Создать статус" %}</a>
+<a href="{% url 'statuses:create' %}" class="btn btn-primary mb-3">{% translate "Создать статус" %}</a>
 
 <table class="table table-striped">
   <thead>
@@ -24,9 +24,9 @@
       <td>{{ status.name }}</td>
       <td>{{ status.created_at|date:"d.m.Y H:i" }}</td>
       <td>
-          <a href="{% url 'statuses:update' status.id %}" class="btn btn-sm btn-primary">{% translate "Изменить" %}</a>
+          <a href="{% url 'statuses:update' status.id %}">{% translate "Изменить" %}</a>
           <br>
-          <a href="{% url 'statuses:delete' status.id %}" class="btn btn-sm btn-danger">{% translate "Удалить" %}</a>
+          <a href="{% url 'statuses:delete' status.id %}">{% translate "Удалить" %}</a>
       </td>
     </tr>
     {% endfor %}

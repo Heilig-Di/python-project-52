@@ -9,12 +9,26 @@
     {% translate "Создать задачу" %}
   </a>
 
-  <div class="mb-3 d-flex align-items-center">
-    {{ filter.form.own_tasks }}
-    <label for="{{ filter.form.own_tasks.auto_id }}" class="form-check-label ms-2">
-        {% translate "Только свои задачи" %}
-    </label>
-  </div>  
+<div class="card mb-3">
+  <div class="card-body bg-light">
+    <form class="form-inline center" method="get">
+      <div class="mb-3"><label class="form-label" for="id_status">{% translate "Статус" %}</label><select name="status" class="form-select ml-2 mr-3" id="id_status">
+  <option value="" selected>---------</option></select>
+</div>
+
+<div class="mb-3"><label class="form-label" for="id_executor">{% translate "Исполнитель" %}</label><select name="executor" class="form-select mr-3 ml-2" id="id_executor">
+  <option value="" selected>---------</option></select>
+</div>
+
+<div class="mb-3"><label class="form-label" for="id_label">{% translate "Метка" %}</label><select name="label" class="form-select mr-3 ml-2" id="id_label">
+  <option value="" selected>---------</option></select>
+</div>
+
+<div class="mb-3"><div class="form-check"><input type="checkbox" name="self_tasks" class="form-check-input mr-3" id="id_self_tasks"><label class="form-check-label" for="id_self_tasks">{% translate "Только свои задачи" %}</label></div></div>
+  <input class="btn btn-primary" type="submit" value="{% translate "Показать" %}">
+    </form>
+  </div>
+</div>  
 
   <table class="table table-striped">
     <thead>
@@ -39,10 +53,10 @@
         <td>{{ task.executor.get_full_name|default_if_none:"" }}</td>
         <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
         <td>
-          <a href="{% url 'tasks:update' task.pk %}" class="btn btn-sm btn-primary">
+          <a href="{% url 'tasks:update' task.pk %}">
             {% translate "Изменить" %}
           </a>
-          <a href="{% url 'tasks:delete' task.pk %}" class="btn btn-sm btn-danger">
+          <a href="{% url 'tasks:delete' task.pk %}">
             {% translate "Удалить" %}
           </a>
         </td>

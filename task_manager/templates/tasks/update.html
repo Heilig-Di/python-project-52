@@ -8,6 +8,14 @@
 <form method="post">
     {% csrf_token %}
     {% bootstrap_form form %}
-    <input type="submit" class="btn btn-primary" value="Изменить">
+    <input type="submit" class="btn btn-primary" value="{% translate "Изменить" %}>
 </form>
+<div class="form-group">
+    <label for="id_labels">{% translate "Метки" %}</label>
+    <select name="labels" id="id_labels" class="form-control" multiple>
+        {% for label in form.labels %}
+            {{ label }}
+        {% endfor %}
+    </select>
+</div>
 {% endblock %}

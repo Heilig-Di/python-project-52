@@ -3,11 +3,10 @@
 {% load i18n %}
 
 {% block bootstrap5_content %}
-<h1 class="my-4">{% translate 'Создать задачу' %}</h1>
-
+<h1 class="my-4"></h1>
 <form method="post">
     {% csrf_token %}
     {% bootstrap_form form %}
-    <button type="submit" class="btn btn-primary">{% translate 'Создать' %}</button>
+    <button type="submit" class="btn btn-primary">{% translate 'Создать метку' %}</button>
 </form>
 {% endblock %}
