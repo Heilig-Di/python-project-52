@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block bootstrap5_content %}
-<h1 class="my-4"></h1>
+<h1 class="my-4">{% translate "Создание метки" %}</h1>
 <form method="post">
     {% csrf_token %}
     {% bootstrap_form form %}

@@ -2,9 +2,10 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
 
-{% block content %}
-<h1>{%  translate 'Метки' %}</h1>
+{% block bootstrap5_content %}
+<h1 class="my-4">{%  translate 'Метки' %}</h1>
 <a href="{% url 'labels:create' %}" class="btn btn-primary">Создать метку</a>
+
 <table class="table">
     <thead>
         <tr>
@@ -14,6 +15,7 @@
             <th></th>
         </tr>
     </thead>
+
     <tbody>
         {% for label in labels %}
         <tr>
@@ -21,12 +23,9 @@
             <td>{{ label.name }}</td>
             <td>{{ label.created_at|date:"d.m.Y H:i" }}</td>
             <td>
-                <a href="{% url 'labels:update' label.id %}">
-                  {% translate "Изменить" %}
-                </a>
-                <a href="{% url 'labels:delete' label.id %}">
-                  {% translate "Удалить" %}
-                </a>
+                <a href="{% url 'labels:update' label.pk %}">{% translate "Изменить" %}</a>
+                <br>
+                <a href="{% url 'labels:delete' label.pk %}">{% translate "Удалить" %}</a>
             </td>
         </tr>
         {% endfor %}

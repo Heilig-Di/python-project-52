@@ -3,19 +3,11 @@
 {% load i18n %}
 
 {% block bootstrap5_content %}
-<h1 class="my-4"></h1>
+<h1 class="my-4">{% translate 'Изменение задачи' %}</h1>
 
 <form method="post">
     {% csrf_token %}
     {% bootstrap_form form %}
-    <input type="submit" class="btn btn-primary" value="{% translate "Изменить" %}>
+    <button type="submit" class="btn btn-primary">{% translate "Изменить" %}</button>
 </form>
-<div class="form-group">
-    <label for="id_labels">{% translate "Метки" %}</label>
-    <select name="labels" id="id_labels" class="form-control" multiple>
-        {% for label in form.labels %}
-            {{ label }}
-        {% endfor %}
-    </select>
-</div>
 {% endblock %}

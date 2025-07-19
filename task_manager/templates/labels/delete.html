@@ -2,7 +2,7 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
 
-{% block content %}
+{% block bootstrap5_content %}
 <h1>{% translate 'Удаление метки' %}</h1>
 <p>{% translate 'Вы уверены, что хотите удалить метку' %} {{ label.name }}?</p>
 <form method="post">

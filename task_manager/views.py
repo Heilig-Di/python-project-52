@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
-
+from django.contrib import messages
 
 class HomeView(TemplateView):
     template_name = "index.html"

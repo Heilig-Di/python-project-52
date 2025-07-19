@@ -1,15 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Label
 from .forms import LabelForm
-
+from django.contrib import messages
 
 class LabelListView(LoginRequiredMixin, ListView):
     model = Label
     template_name = 'labels/list.html'
+    context_object_name = "labels"
+
 
 class LabelCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Label
@@ -18,12 +20,14 @@ class LabelCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('labels:list')
     success_message = 'Метка успешно создана'
 
+
 class LabelUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Label
     form_class = LabelForm
     template_name = 'labels/update.html'
     success_url = reverse_lazy('labels:list')
     success_message = 'Метка успешно изменена'
+
 
 class LabelDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Label
