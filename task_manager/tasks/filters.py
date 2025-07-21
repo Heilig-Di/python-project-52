@@ -1,9 +1,9 @@
 import django_filters
-from django import forms
 from .models import Task
 from task_manager.statuses.models import Status
 from task_manager.users.models import User
 from task_manager.labels.models import Label
+from django.forms.widgets import CheckboxInput
 
 
 class TaskFilter(django_filters.FilterSet):
@@ -20,13 +20,13 @@ class TaskFilter(django_filters.FilterSet):
     labels = django_filters.ModelChoiceFilter(
         queryset=Label.objects.all(),
         label='Метка',
-        field_name='labels__id'
+        field_name='labels'
     )
 
     self_tasks = django_filters.BooleanFilter(
         method='filter_self_tasks',
         label='Только свои задачи',
-        widget=forms.CheckboxInput()
+        widget=CheckboxInput
     )
 
 
