@@ -15,7 +15,7 @@ dependencies = [
     "psycopg2-binary>=2.9.9",
     "whitenoise==6.9.0",
     "django_bootstrap5==25.1",
-    "django_filters"
+    "django_filters==25.1"
 ]
 
 [build-system]
