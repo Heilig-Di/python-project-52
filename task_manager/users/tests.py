@@ -51,11 +51,15 @@ class UserTestCase(TestCase):
 
 
     def test_other_update(self):
-        self.client.login(username='testuser', password='password123')
-
         original_name = self.other_user.first_name
-        self.other_user.refresh_from_db()
-        self.assertNotEqual(self.other_user.first_name, original_name)
+        response = self.client.post(
+            reverse('users:update', args=[self.other_user.pk]),
+            {'first_name': 'Tuffy'}
+        )
+
+        self.user.refresh_from_db()
+        self.assertEqual(self.other_user.first_name, original_name)
+        self.assertRedirects(response, reverse('users:list'))
 
 
     def test_user_delete(self):

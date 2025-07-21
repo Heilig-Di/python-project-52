@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from .models import Label
-from tasks.models import Task
+from task_manager.tasks.models import Task
 
 User = get_user_model()
 

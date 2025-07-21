@@ -10,6 +10,7 @@ class Task(models.Model):
         unique=True,
         verbose_name=_('Имя')
     )
+
     description = models.TextField(
         blank=True,
         verbose_name=_('Описание')
