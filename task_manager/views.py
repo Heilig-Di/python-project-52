@@ -24,5 +24,5 @@ class LogoutView(SuccessMessageMixin, LogoutView):
         return super().dispatch(request, *args, **kwargs)
 
 def error(request):
-    foo()
-    return HttpResponse('You shouldn\'t be seeing this')
+    division_by_zero = 1 / 0
+    return HttpResponse("You shouldn't be seeing this")
