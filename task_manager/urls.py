@@ -29,5 +29,5 @@ urlpatterns = [
     path('statuses/', include('task_manager.statuses.urls', namespace='statuses')),
     path('labels/', include('task_manager.labels.urls', namespace='labels')),
     path('tasks/', include('task_manager.tasks.urls', namespace='tasks')),
-    path(r'^error$', error, name='test_error'),
+    path('error/', error, name='test_error'),
 ]
