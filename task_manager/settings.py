@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "task_manager.tasks",
     "task_manager.labels",
     "django_filters",
+    "rollbar",
 ]
 
 MIDDLEWARE = [
@@ -65,7 +66,7 @@ MIDDLEWARE = [
 ]
 
 ROLLBAR = {
-    'access_token': '8d949f9b0385455dab8f43bffbe2b01e',
+    'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
     'environment': 'development' if DEBUG else 'production',
     'code_version': '1.0',
     'root': BASE_DIR,
