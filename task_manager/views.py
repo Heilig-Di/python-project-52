@@ -23,7 +23,6 @@ class LogoutView(SuccessMessageMixin, LogoutView):
         messages.info(request, self.success_message)
         return super().dispatch(request, *args, **kwargs)
 
-def index(request):
-    a = None
-    a.hello()
-    return HttpResponse("Hello, world. You're at the pollapp index.")
+def error(request):
+    foo()
+    return HttpResponse('You shouldn\'t be seeing this')
