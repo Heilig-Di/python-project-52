@@ -4,6 +4,8 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
+from django.shortcuts import render
+from django.http import HttpResponse
 
 class HomeView(TemplateView):
     template_name = "index.html"
@@ -20,3 +22,8 @@ class LogoutView(SuccessMessageMixin, LogoutView):
     def dispatch(self, request, *args, **kwargs):
         messages.info(request, self.success_message)
         return super().dispatch(request, *args, **kwargs)
+
+def index(request):
+    a = None
+    a.hello()
+    return HttpResponse("Hello, world. You're at the pollapp index.")
