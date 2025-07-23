@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-g8i9qfkkjpf)c4=!g^31t_xm2)_&#v*j8p%l1v%xt4%jxd**zv")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = "False"
+DEBUG = "True"
 
 ALLOWED_HOSTS = ['webserver', '127.0.0.1', 'localhost', 'hexlet-code-x97y.onrender.com']
 
@@ -66,7 +66,7 @@ MIDDLEWARE = [
 ]
 
 ROLLBAR = {
-    'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
+    'access_token': 'ROLLBAR_ACCESS_TOKEN',
     'environment': 'development' if DEBUG else 'production',
     'code_version': '1.0',
     'root': BASE_DIR,
