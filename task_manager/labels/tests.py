@@ -2,7 +2,6 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from .models import Label
-from task_manager.tasks.models import Task
 
 User = get_user_model()
 
@@ -19,7 +18,7 @@ class LabelTestCase(TestCase):
 
 
     def test_label_create(self):
-        response = self.client.post(
+        self.client.post(
             reverse('labels:create'),
             {'name': 'Urgent'}
         )
@@ -27,7 +26,7 @@ class LabelTestCase(TestCase):
 
 
     def test_label_update(self):
-        response = self.client.post(
+        self.client.post(
             reverse('labels:update', args=[self.label.pk]),
             {'name': 'Update label'}
         )
@@ -36,7 +35,7 @@ class LabelTestCase(TestCase):
 
 
     def test_label_delete(self):
-        response = self.client.post(
+        self.client.post(
             reverse('labels:delete', args=[self.label.pk])
         )
 
