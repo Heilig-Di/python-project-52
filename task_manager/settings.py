@@ -32,7 +32,6 @@ DEBUG = "True"
 
 ALLOWED_HOSTS = ['webserver', '127.0.0.1', 'localhost', 'hexlet-code-x97y.onrender.com']
 
-ROLLBAR_ACCESS_TOKEN = os.getenv('ROLLBAR_ACCESS_TOKEN')
 # Application definition
 
 INSTALLED_APPS = [
@@ -66,7 +65,7 @@ MIDDLEWARE = [
 ]
 
 ROLLBAR = {
-    'access_token': ROLLBAR_ACCESS_TOKEN,
+    'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
     'environment': 'development' if DEBUG else 'production',
     'code_version': '1.0',
     'root': BASE_DIR,
