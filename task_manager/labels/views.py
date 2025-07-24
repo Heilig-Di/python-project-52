@@ -35,6 +35,7 @@ class LabelDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Label
     template_name = 'labels/delete.html'
     success_url = reverse_lazy('labels:list')
+    success_message = _('Метка успешно удалена')
 
     def form_valid(self, form):
         try:
