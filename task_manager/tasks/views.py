@@ -8,6 +8,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext_lazy as _
 from .models import Task
+from task_manager.statuses.models import Status
+from task_manager.labels.models import Label
+from task_manager.users.models import User
 from .forms import TaskForm
 from .filters import TaskFilter
 
