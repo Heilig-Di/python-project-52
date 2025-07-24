@@ -1,6 +1,7 @@
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import User
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 from .forms import UserRegisterForm, UserUpdateForm
 
 
@@ -14,6 +15,7 @@ class UserCreateView(CreateView):
     form_class = UserRegisterForm
     template_name = 'users/create.html'
     success_url = reverse_lazy('login')
+    success_message = _('Пользователь успешно зарегистрирован')
 
 class UserUpdateView(UpdateView):
     model = User
