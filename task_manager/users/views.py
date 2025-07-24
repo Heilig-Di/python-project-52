@@ -12,7 +12,7 @@ class UserListView(ListView):
     template_name = 'users/list.html'
     context_object_name = 'users'
 
-class UserCreateView(CreateView):
+class UserCreateView(SuccessMessageMixin, CreateView):
     model = User
     form_class = UserRegisterForm
     template_name = 'users/create.html'
@@ -24,14 +24,14 @@ class UserCreateView(CreateView):
         messages.success(self.request, self.success_message)
         return response
 
-class UserUpdateView(UpdateView):
+class UserUpdateView(SuccessMessageMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = 'users/update.html'
     success_url = reverse_lazy('users:list')
     success_message = _('Пользователь успешно изменен')
 
-class UserDeleteView(DeleteView):
+class UserDeleteView(SuccessMessageMixin, DeleteView):
     model = User
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users:list')
