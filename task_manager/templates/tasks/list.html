@@ -13,29 +13,37 @@
     <div class="card-body bg-light">
       <form method="get" class="row">
 
-          <div class="col-md-3 mb-3">
-            <label for="id_status" class="form-label">{% translate "Статус" %}</label>
-            {{ filter.form.status }}
-          </div>
+        <div class="col-md-3 mb-3">
+          <label for="id_status" class="form-label">{% translate "Статус" %}</label>
+          <select name="status" id="id_status" class="form-select">
+            <option value="">---------</option>
+            {% for status in statuses %}
+              <option value="{{ status.id }}" 
+                {% if filter.form.status.value == status.id|stringformat:"s" %}selected{% endif %}>
+                {{ status.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
         
-          <div class="col-md-3 mb-3">
-            <label for="id_executor" class="form-label">{% translate "Исполнитель" %}</label>
-            {{ filter.form.executor }}
-          </div>
+        <div class="col-md-3 mb-3">
+          <label for="id_executor" class="form-label">{% translate "Исполнитель" %}</label>
+          {{ filter.form.executor }}
+        </div>
         
-          <div class="col-md-3 mb-3">
-            <label for="id_labels" class="form-label">{% translate "Метка" %}</label>
-            {{ filter.form.labels }}
-          </div>
+        <div class="col-md-3 mb-3">
+          <label for="id_labels" class="form-label">{% translate "Метка" %}</label>
+          {{ filter.form.labels }}
+        </div>
         
-          <div class="col-md-3 mb-3">
-            <div class="form-check mt-4">
-              {{ filter.form.self_tasks }}
-              <label class="form-check-label" for="{{ filter.form.self_tasks.id_for_label }}">
-                {% translate "Только свои задачи" %}
-              </label>
-            </div>
+        <div class="col-md-3 mb-3">
+          <div class="form-check mt-4">
+            {{ filter.form.self_tasks }}
+            <label class="form-check-label" for="{{ filter.form.self_tasks.id_for_label }}">
+              {% translate "Только свои задачи" %}
+            </label>
           </div>
+        </div>
         
         <button type="submit" class="btn btn-primary">{% translate "Показать" %}</button>
       </form>
