@@ -21,13 +21,12 @@ class TaskListView(LoginRequiredMixin, ListView):
     filterset_class = TaskFilter
 
     def get_queryset(self):
-        return Task.objects.all().order_by('id')
+        self.filterset = TaskFilter(self.request.GET, queryset=super().get_queryset(), request=self.request)
+        return self.filterset.qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['statuses'] = Status.objects.all()
-        context['executors'] = User.objects.all()
-        context['labels'] = Label.objects.all()
+        context['filter'] = self.filterset
         return context
 
 class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
