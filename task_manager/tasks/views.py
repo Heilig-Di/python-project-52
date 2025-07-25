@@ -28,6 +28,8 @@ class TaskListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['filter'] = self.filterset
         context['statuses'] = Status.objects.all()
+        context['users'] = User.objects.all()
+        context['labels'] = Label.objects.all()
         return context
 
 class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -65,6 +67,17 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'tasks/delete.html'
     success_url = reverse_lazy('tasks:list')
     success_message = _('Задача успешно удалена')
+    error_message = _('Невозможно удалить задачу, потому что она используется')
+    error_url = reverse_lazy('tasks:list')
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            response = super().delete(request, *args, **kwargs)
+            messages.success(self.request, self.success_message)
+            return response
+        except Exception:
+            messages.error(self.request, self.error_message)
+            return redirect(self.error_url)
 
     def dispatch(self, request, *args, **kwargs):
         task = self.get_object()
