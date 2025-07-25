@@ -19,32 +19,19 @@
         
         <div class="mb-3">
           {{ filter.form.executor.label_tag }}
-            <select name="{{ filter.form.executor.name }}" id="{{ filter.form.executor.id_for_label }}" class="form-select form-select-lg">
-              <option value="" selected>---------</option>
-              {% for option in filter.form.executor.field.queryset %}
-                <option value="{{ option.id }}" {% if option.id == filter.form.executor.value %}selected{% endif %}>
-                    {{ option.get_full_name|default:option.username }}
-                </option>
-              {% endfor %}
-            </select>
+          {{ filter.form.executor }}
         </div>
         
         <div class="mb-3">
           {{ filter.form.labels.label_tag }}
-            <select name="{{ filter.form.label.name }}" id="{{ filter.form.label.id_for_label }}" class="form-select form-select-lg">
-              <option value="" selected>---------</option>
-              {% for option in filter.form.labels.field.queryset %}
-                <option value="{{ option.id }}" {% if option.id == filter.form.labels.value %}selected{% endif %}>
-                    {{ option.name }}
-                </option>
-              {% endfor %}
-            </select>
+          {{ filter.form.labels }}
         </div>
         
         <div class="mb-3 form-check">
+          <label class="form-check-label">
             {{ filter.form.self_tasks }}
-            <input type="checkbox" id="self_tasks">
-            <label class="form-check-label" for="self_tasks">{% translate "Только свои задачи" %}</label>
+            {% translate "Только свои задачи" %}
+          </label>
         </div>
         
         <button type="submit" class="btn btn-primary">{% translate "Показать" %}</button>
