@@ -46,7 +46,7 @@ class Task(models.Model):
         Label,
         related_name='tasks',
         blank=True,
-        verbose_name='Метки'
+        verbose_name=_('Метки')
     )
 
 
