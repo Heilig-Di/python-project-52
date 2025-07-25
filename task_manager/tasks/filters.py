@@ -1,7 +1,9 @@
 import django_filters
 from .models import Task
 from django import forms
-
+from task_manager.statuses.models import Status
+from task_manager.users.models import User
+from task_manager.labels.models import Label
 
 class TaskFilter(django_filters.FilterSet):
     status = django_filters.ModelChoiceFilter(
