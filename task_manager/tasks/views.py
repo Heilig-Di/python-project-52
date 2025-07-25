@@ -13,6 +13,7 @@ from task_manager.labels.models import Label
 from task_manager.users.models import User
 from .forms import TaskForm
 from .filters import TaskFilter
+from django.db.models import ProtectedError
 
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
@@ -68,16 +69,15 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('tasks:list')
     success_message = _('Задача успешно удалена')
     error_message = _('Невозможно удалить задачу, потому что она используется')
-    error_url = reverse_lazy('tasks:list')
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form):
         try:
-            response = super().delete(request, *args, **kwargs)
+            response = super().delete(self.request)
             messages.success(self.request, self.success_message)
             return response
-        except Exception:
+        except ProtectedError:
             messages.error(self.request, self.error_message)
-            return redirect(self.error_url)
+            return redirect(self.success_url)
 
     def dispatch(self, request, *args, **kwargs):
         task = self.get_object()
