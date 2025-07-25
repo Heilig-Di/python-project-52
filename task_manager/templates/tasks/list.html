@@ -14,7 +14,7 @@
       <form method="get" class="form-inline">
           <div class="mb-3">
             {{ filter.form.status.label_tag }}
-            <select name="{{ filter.form.status.name }}" id="{{ filter.form.status.id_for_label }}" class="form-select form-select-lg">
+            <select name="{{ filter.form.status.name }}" id="status_filter" class="form-select form-select-lg">
               <option value="" selected>---------</option>
               {% for option in filter.form.status.field.queryset %}
                 <option value="{{ option.id }}" {% if option.id == filter.form.status.value %}selected{% endif %}>
