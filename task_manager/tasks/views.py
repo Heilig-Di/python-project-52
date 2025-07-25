@@ -21,7 +21,7 @@ class TaskListView(LoginRequiredMixin, ListView):
     filterset_class = TaskFilter
 
     def get_queryset(self):
-        self.filterset = TaskFilter(self.request.GET, queryset=super().get_queryset(), request=self.request)
+        self.filterset = self.filterset_class(self.request.GET, queryset=super().get_queryset())
         return self.filterset.qs
 
     def get_context_data(self, **kwargs):

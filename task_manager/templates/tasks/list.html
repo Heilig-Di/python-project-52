@@ -11,28 +11,31 @@
 
   <div class="card mb-3">
     <div class="card-body bg-light">
-      <form method="get" class="form-inline">
-          <div class="mb-3">
-            {{ filter.form.status.label_tag }}
+      <form method="get" class="row">
+
+          <div class="col-md-3 mb-3">
+            <label for="id_status" class="form-label">{% translate "Статус" %}</label>
             {{ filter.form.status }}
           </div>
         
-        <div class="mb-3">
-          {{ filter.form.executor.label_tag }}
-          {{ filter.form.executor }}
-        </div>
+          <div class="col-md-3 mb-3">
+            <label for="id_executor" class="form-label">{% translate "Исполнитель" %}</label>
+            {{ filter.form.executor }}
+          </div>
         
-        <div class="mb-3">
-          {{ filter.form.labels.label_tag }}
-          {{ filter.form.labels }}
-        </div>
+          <div class="col-md-3 mb-3">
+            <label for="id_labels" class="form-label">{% translate "Метка" %}</label>
+            {{ filter.form.labels }}
+          </div>
         
-        <div class="mb-3 form-check">
-          <label class="form-check-label">
-            {{ filter.form.self_tasks }}
-            {% translate "Только свои задачи" %}
-          </label>
-        </div>
+          <div class="col-md-3 mb-3">
+            <div class="form-check mt-4">
+              {{ filter.form.self_tasks }}
+              <label class="form-check-label" for="{{ filter.form.self_tasks.id_for_label }}">
+                {% translate "Только свои задачи" %}
+              </label>
+            </div>
+          </div>
         
         <button type="submit" class="btn btn-primary">{% translate "Показать" %}</button>
       </form>
