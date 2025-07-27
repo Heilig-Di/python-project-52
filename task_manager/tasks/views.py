@@ -74,7 +74,7 @@ class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixi
         return task.author == self.request.user
 
     def handle_no_permission(self):
-        messages.error(self.request, _('Задачу может удалить только её автор'))
+        messages.error(self.request, _('Задачу может удалить только ее автор'))
         return redirect(self.success_url)
 
     def delete(self, request, *args, **kwargs):
