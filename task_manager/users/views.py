@@ -53,7 +53,7 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         return super().get(request, *args, **kwargs)
 
 
-    def delete(self, request, *args, **kwargs):
-        response = super().delete(request, *args, **kwargs)
-        messages.success(request, self.success_message)
-        return response
+    def get_success_url(self):
+        user_id = self.object.pk
+        messages.success(self.request, self.success_message)
+        return reverse('users:delete', kwargs={'pk': user_id})
