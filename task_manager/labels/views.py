@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Label
 from .forms import LabelForm
 from django.contrib import messages
+from django.db.models import ProtectedError
 from django.utils.translation import gettext_lazy as _
 
 
@@ -36,13 +37,14 @@ class LabelDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = 'labels/delete.html'
     success_url = reverse_lazy('labels:list')
     success_message = _('Метка успешно удалена')
+    error_message = _('Невозможно удалить метку, потому что она используется')
 
-    def form_valid(self, form):
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
         try:
-            return super().form_valid(form)
-        except Exception:
-            messages.error(
-                self.request,
-                _('Невозможно удалить метку, потому что она используется')
-            )
+            self.object.delete()
+            messages.success(request, self.success_message)
+            return redirect(self.success_url)
+        except ProtectedError:
+            messages.error(request, self.error_message)
             return redirect(self.success_url)
