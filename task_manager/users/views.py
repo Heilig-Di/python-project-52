@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from .forms import UserRegisterForm, UserUpdateForm
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 
 
@@ -31,8 +32,19 @@ class UserUpdateView(SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy('users:list')
     success_message = _('Пользователь успешно изменен')
 
-class UserDeleteView(SuccessMessageMixin, DeleteView):
+class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = User
     template_name = 'users/delete.html'
     success_url = reverse_lazy('users:list')
     success_message = _('Пользователь успешно удален')
+
+    def delete(self, request, *args, **kwargs):
+        user = self.get_object()
+
+        try:
+            response = super().delete(request, *args, **kwargs)
+            messages.success(request, self.success_message)
+            return response
+        except Exception as e:
+            messages.error(request, _('Невозможно удалить пользователя, потому что он используется'))
+            return redirect(self.success_url)
