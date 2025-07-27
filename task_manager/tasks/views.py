@@ -4,7 +4,7 @@ from django.views.generic import (
     ListView, CreateView, UpdateView, DeleteView, DetailView
 )
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext_lazy as _
 from .models import Task
@@ -63,29 +63,15 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'task'
 
 
-class TaskDeleteView(LoginRequiredMixin, DeleteView):
+class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
     model = Task
     template_name = 'tasks/delete.html'
     success_url = reverse_lazy('tasks:list')
     success_message = _('Задача успешно удалена')
-    error_message = _('Невозможно удалить задачу, потому что она используется')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['can_delete'] = self.object.author == self.request.user
-        return context
+    def get_context_data(self):
+        return self.get_object().author == self.request.user
 
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-
-        if self.object.author != request.user:
-            messages.error(request, _('Задачу может удалить только её автор'))
-            return redirect(self.success_url)
-
-        try:
-            response = super().delete(request, *args, **kwargs)
-            messages.success(request, self.success_message)
-            return response
-        except ProtectedError:
-            messages.error(request, self.error_message)
-            return redirect(self.success_url)
+    def delete(self):
+        messages.error(self.request, _('Задачу может удалить только её автор'))
+        return redirect(self.success_url)
