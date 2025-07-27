@@ -13,7 +13,7 @@ from task_manager.labels.models import Label
 from task_manager.users.models import User
 from .forms import TaskForm
 from .filters import TaskFilter
-from django.db.models import ProtectedError
+
 
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
@@ -22,7 +22,11 @@ class TaskListView(LoginRequiredMixin, ListView):
     filterset_class = TaskFilter
 
     def get_queryset(self):
-        self.filterset = self.filterset_class(self.request.GET, queryset=super().get_queryset(), request=self.request)
+        self.filterset = self.filterset_class(
+            self.request.GET,
+            queryset=super().get_queryset(),
+            request=self.request
+        )
         return self.filterset.qs
 
     def get_context_data(self, **kwargs):
@@ -32,6 +36,7 @@ class TaskListView(LoginRequiredMixin, ListView):
         context['users'] = User.objects.all()
         context['labels'] = Label.objects.all()
         return context
+
 
 class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Task
@@ -63,7 +68,11 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'task'
 
 
-class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
+class TaskDeleteView(LoginRequiredMixin,
+                     UserPassesTestMixin,
+                     SuccessMessageMixin,
+                     DeleteView
+                     ):
     model = Task
     template_name = 'tasks/delete.html'
     success_url = reverse_lazy('tasks:list')

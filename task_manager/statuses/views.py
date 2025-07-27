@@ -9,6 +9,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import ProtectedError
 
+
 class StatusListView(LoginRequiredMixin, ListView):
     model = Status
     template_name = 'statuses/list.html'

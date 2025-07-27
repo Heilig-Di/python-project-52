@@ -18,7 +18,6 @@ class UserTestCase(TestCase):
             password='123password'
         )
 
-
     def test_user_create(self):
         response = self.client.post(reverse('users:create'), {
             'username': 'newuser',
@@ -34,7 +33,6 @@ class UserTestCase(TestCase):
         self.assertEqual(user.first_name, "Tom")
         self.assertEqual(user.last_name, "User")
 
-
     def test_user_update(self):
         self.client.login(username='testuser', password='password123')
 
@@ -49,7 +47,6 @@ class UserTestCase(TestCase):
         self.assertEqual(self.user.first_name, 'Jerry')
         self.assertEqual(self.user.last_name, 'User')
 
-
     def test_other_update(self):
         original_name = self.other_user.first_name
         response = self.client.post(
@@ -61,14 +58,14 @@ class UserTestCase(TestCase):
         self.assertEqual(self.other_user.first_name, original_name)
         self.assertRedirects(response, reverse('users:list'))
 
-
     def test_user_delete(self):
         self.client.login(username='testuser', password='password123')
 
-        response = self.client.post(reverse('users:delete', args=[self.user.pk]))
+        response = self.client.post(
+            reverse('users:delete', args=[self.user.pk])
+        )
         self.assertRedirects(response, reverse('users:list'))
         self.assertFalse(User.objects.filter(username='testuser').exists())
-
 
     def test_other_delete(self):
         self.client.login(username='testuser', password='password123')

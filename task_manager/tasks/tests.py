@@ -7,6 +7,7 @@ from task_manager.labels.models import Label
 
 User = get_user_model()
 
+
 class TaskTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
@@ -25,7 +26,6 @@ class TaskTestCase(TestCase):
             author=self.user
         )
 
-
     def test_task_create(self):
         self.client.login(username='testuser', password='password123')
         response = self.client.post(
@@ -38,7 +38,6 @@ class TaskTestCase(TestCase):
         )
         self.assertRedirects(response, reverse('tasks:list'))
         self.assertTrue(Task.objects.filter(name='New Task').exists())
-
 
     def test_task_update(self):
         self.client.login(username='testuser', password='password123')
@@ -54,7 +53,6 @@ class TaskTestCase(TestCase):
         self.task.refresh_from_db()
         self.assertEqual(self.task.name, 'Updated Task')
 
-
     def test_task_detail(self):
         self.client.login(username='testuser', password='password123')
         response = self.client.get(
@@ -63,7 +61,6 @@ class TaskTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Test Task')
 
-
     def test_task_delete_by_author(self):
         self.client.login(username='testuser', password='password123')
         response = self.client.post(
@@ -71,7 +68,6 @@ class TaskTestCase(TestCase):
         )
         self.assertRedirects(response, reverse('tasks:list'))
         self.assertFalse(Task.objects.filter(pk=self.task.pk).exists())
-
 
     def test_task_delete_by_other_user(self):
         self.client.login(username='otheruser', password='123password')

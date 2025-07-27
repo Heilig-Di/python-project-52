@@ -1,5 +1,10 @@
 from django.urls import path
-from .views import LabelListView, LabelCreateView, LabelUpdateView, LabelDeleteView
+from .views import (
+    LabelListView,
+    LabelCreateView,
+    LabelUpdateView,
+    LabelDeleteView
+)
 
 app_name = 'labels'
 

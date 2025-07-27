@@ -5,6 +5,7 @@ from task_manager.statuses.models import Status
 from task_manager.users.models import User
 from task_manager.labels.models import Label
 
+
 class TaskFilter(django_filters.FilterSet):
     status = django_filters.ModelChoiceFilter(
         queryset=Status.objects.all(),
@@ -30,11 +31,9 @@ class TaskFilter(django_filters.FilterSet):
         widget=forms.CheckboxInput()
     )
 
-
     class Meta:
         model = Task
         fields = ['status', 'executor', 'labels', 'self_tasks']
-
 
     def filter_self_tasks(self, queryset, name, value):
         if value and self.request.user.is_authenticated:

@@ -4,6 +4,7 @@ from task_manager.statuses.models import Status
 from task_manager.users.models import User
 from task_manager.labels.models import Label
 
+
 class Task(models.Model):
     name = models.CharField(
         max_length=255,
@@ -48,7 +49,6 @@ class Task(models.Model):
         blank=True,
         verbose_name=_('Метки')
     )
-
 
     def __str__(self):
         return self.name

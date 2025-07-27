@@ -14,6 +14,7 @@ class UserListView(ListView):
     template_name = 'users/list.html'
     context_object_name = 'users'
 
+
 class UserCreateView(SuccessMessageMixin, CreateView):
     model = User
     form_class = UserRegisterForm
@@ -26,12 +27,14 @@ class UserCreateView(SuccessMessageMixin, CreateView):
         messages.success(self.request, self.success_message)
         return response
 
+
 class UserUpdateView(SuccessMessageMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = 'users/update.html'
     success_url = reverse_lazy('users:list')
     success_message = _('Пользователь успешно изменен')
+
 
 class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = User
@@ -44,13 +47,19 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         current_user = request.user
 
         if user_to_delete != current_user:
-            messages.error(request, _('У вас нет прав для изменения другого пользователя.'))
+            messages.error(
+                request, _('У вас нет прав для изменения другого пользователя.')
+            )
             return redirect(self.success_url)
-        if hasattr(user_to_delete, 'authored_tasks') and user_to_delete.authored_tasks.exists():
-            messages.error(request, _('Невозможно удалить пользователя, потому что он используется в задачах'))
+        if (
+            hasattr(user_to_delete, 'authored_tasks') and
+            user_to_delete.authored_tasks.exists()
+        ):
+            messages.error(
+                request, _('Невозможно удалить пользователя, потому что он используется в задачах')
+            )
             return redirect(self.success_url)
         return super().get(request, *args, **kwargs)
-
 
     def delete(self, request, *args, **kwargs):
         response = super().delete(request, *args, **kwargs)

@@ -5,6 +5,7 @@ from .models import Label
 
 User = get_user_model()
 
+
 class LabelTestCase(TestCase):
 
     def setUp(self):
@@ -16,14 +17,12 @@ class LabelTestCase(TestCase):
 
         self.label = Label.objects.create(name='label1')
 
-
     def test_label_create(self):
         self.client.post(
             reverse('labels:create'),
             {'name': 'Urgent'}
         )
         self.assertTrue(Label.objects.filter(name='Urgent').exists())
-
 
     def test_label_update(self):
         self.client.post(
@@ -32,7 +31,6 @@ class LabelTestCase(TestCase):
         )
         self.label.refresh_from_db()
         self.assertEqual(self.label.name, 'Update label')
-
 
     def test_label_delete(self):
         self.client.post(

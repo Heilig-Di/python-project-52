@@ -4,13 +4,16 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 
+
 class HomeView(TemplateView):
     template_name = "index.html"
+
 
 class LoginView(SuccessMessageMixin, LoginView):
     template_name = 'users/login.html'
     success_message = "Вы залогинены"
     next_page = reverse_lazy('index')
+
 
 class LogoutView(SuccessMessageMixin, LogoutView):
     next_page = reverse_lazy('index')
