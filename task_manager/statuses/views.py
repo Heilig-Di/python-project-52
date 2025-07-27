@@ -5,6 +5,7 @@ from .models import Status
 from .forms import StatusForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import ProtectedError
 
 class StatusListView(LoginRequiredMixin, ListView):
     model = Status
@@ -34,4 +35,10 @@ class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     success_message = _('Статус успешно удален')
     success_url = reverse_lazy('statuses:list')
     error_message = _('Невозможно удалить статус, потому что он используется')
-    error_url = reverse_lazy('statuses:list')
+
+    def post(self, request, *args, **kwargs):
+        try:
+            return self.delete(request, *args, **kwargs)
+        except ProtectedError:
+            messages.error(request, self.error_message)
+            return redirect(self.success_url)
