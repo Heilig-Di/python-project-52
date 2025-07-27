@@ -39,7 +39,7 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
 
     def post(self, request, *args, **kwargs):
         try:
-            response = self.delete(request, *args, **kwargs)
+            response = super().delete(request, *args, **kwargs)
             messages.success(request, self.success_message)
             return response
         except ProtectedError:
