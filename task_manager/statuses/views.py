@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -29,7 +30,7 @@ class StatusUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_message = _('Статус успешно изменен')
 
 
-class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class StatusDeleteView(LoginRequiredMixin, DeleteView):
     model = Status
     template_name = 'statuses/delete.html'
     success_message = _('Статус успешно удален')
@@ -38,7 +39,9 @@ class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
     def post(self, request, *args, **kwargs):
         try:
-            return self.delete(request, *args, **kwargs)
+            response = self.delete(request, *args, **kwargs)
+            messages.success(request, self.success_message)
+            return response
         except ProtectedError:
             messages.error(request, self.error_message)
             return redirect(self.success_url)
