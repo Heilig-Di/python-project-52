@@ -70,18 +70,19 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     success_message = _('Задача успешно удалена')
     error_message = _('Невозможно удалить задачу, потому что она используется')
 
-    def form_valid(self, form):
-        try:
-            response = super().delete(self.request)
-            messages.success(self.request, self.success_message)
-            return response
-        except ProtectedError:
-            messages.error(self.request, self.error_message)
-            return redirect(self.success_url)
-
     def dispatch(self, request, *args, **kwargs):
         task = self.get_object()
         if task.author != request.user:
             messages.error(request, _('Задачу может удалить только её автор'))
             return redirect(self.success_url)
         return super().dispatch(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        try:
+            response = super().delete(request, *args, **kwargs)
+            messages.success(request, self.success_message)
+            return response
+        except ProtectedError:
+            messages.error(request, self.error_message)
+            return redirect(self.success_url)
