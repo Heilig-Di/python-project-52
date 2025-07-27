@@ -42,7 +42,7 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
         try:
             self.object.delete()
             messages.success(request, self.success_message)
-            return redirect(self.success_url)x
+            return redirect(self.success_url)
         except ProtectedError:
             messages.error(request, self.error_message)
             return redirect(self.success_url)
