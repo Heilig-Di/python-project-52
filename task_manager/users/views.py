@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import User
 from django.urls import reverse_lazy
