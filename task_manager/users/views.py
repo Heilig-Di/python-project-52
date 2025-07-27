@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from .forms import UserRegisterForm, UserUpdateForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import ProtectedError
 from django.contrib import messages
 
 
@@ -38,13 +39,20 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     success_url = reverse_lazy('users:list')
     success_message = _('Пользователь успешно удален')
 
-    def delete(self, request, *args, **kwargs):
-        user = self.get_object()
+    def get(self, request, *args, **kwargs):
+        user_to_delete = self.get_object()
+        current_user = request.user
 
-        try:
-            response = super().delete(request, *args, **kwargs)
-            messages.success(request, self.success_message)
-            return response
-        except Exception as e:
-            messages.error(request, _('Невозможно удалить пользователя, потому что он используется'))
+        if user_to_delete != current_user:
+            messages.error(request, _('У вас нет прав для изменения другого пользователя.'))
             return redirect(self.success_url)
+        if user_to_delete.task_set.exists():
+            messages.error(request, _('Невозможно удалить пользователя, потому что он используется в задачах'))
+            return redirect(self.success_url)
+        return super().get(request, *args, **kwargs)
+
+
+    def delete(self, request, *args, **kwargs):
+        response = super().delete(request, *args, **kwargs)
+        messages.success(request, _('Пользователь успешно удален'))
+        return response
