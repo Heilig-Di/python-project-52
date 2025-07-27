@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from .forms import UserRegisterForm, UserUpdateForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db import ProtectedError
+from django.db.models import ProtectedError
 from django.contrib import messages
 
 
