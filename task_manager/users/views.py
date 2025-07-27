@@ -6,7 +6,6 @@ from django.utils.translation import gettext_lazy as _
 from .forms import UserRegisterForm, UserUpdateForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import ProtectedError
 from django.contrib import messages
 
 
@@ -47,13 +46,13 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         if user_to_delete != current_user:
             messages.error(request, _('У вас нет прав для изменения другого пользователя.'))
             return redirect(self.success_url)
-        if hasattr(user_to_delete, 'authored_tasks'):
+        if hasattr(user_to_delete, 'authored_tasks') and user_to_delete.authored_tasks.exists():
             messages.error(request, _('Невозможно удалить пользователя, потому что он используется в задачах'))
             return redirect(self.success_url)
         return super().get(request, *args, **kwargs)
 
 
-    def get_success_url(self):
-        user_id = self.object.pk
+    def delete(self, request, *args, **kwargs):
+        response = super().delete(request, *args, **kwargs)
         messages.success(self.request, self.success_message)
-        return reverse('users:delete', kwargs={'pk': user_id})
+        return response
