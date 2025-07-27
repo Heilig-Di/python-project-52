@@ -47,7 +47,7 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         if user_to_delete != current_user:
             messages.error(request, _('У вас нет прав для изменения другого пользователя.'))
             return redirect(self.success_url)
-        if user_to_delete.task_set.exists():
+        if hasattr(user_to_delete, 'authored_tasks'):
             messages.error(request, _('Невозможно удалить пользователя, потому что он используется в задачах'))
             return redirect(self.success_url)
         return super().get(request, *args, **kwargs)
