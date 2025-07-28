@@ -17,8 +17,8 @@ class UserRegisterForm(UserCreationForm):
             'username': 'Имя пользователя',
             'first_name': 'Имя',
             'last_name': 'Фамилия',
-            'password1': 'Пароль',
-            'password2': 'Подтверждение пароля',
+            'password1': 'Пароль', //NOSONAR
+            'password2': 'Подтверждение пароля', //NOSONAR
         }
 
 
