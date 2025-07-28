@@ -58,7 +58,8 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         ):
             messages.error(
                 request,
-                _('Невозможно удалить пользователя, потому что он используется в задачах')
+                _('Невозможно удалить пользователя, потому что'
+                  'он используется в задачах')
             )
             return redirect(self.success_url)
         return super().get(request, *args, **kwargs)
