@@ -127,14 +127,12 @@ class TaskFilterTestCase(TestCase):
         self.assertContains(response, 'Task 1')
         self.assertNotContains(response, 'Task 2')
 
-
     def test_filter_by_label(self):
         response = self.client.get(reverse('tasks:list'), {
             'labels': self.label1.id
         })
         self.assertContains(response, 'Task 1')
         self.assertNotContains(response, 'Task 2')
-
 
     def test_filter_self_tasks(self):
         response = self.client.get(reverse('tasks:list'), {
