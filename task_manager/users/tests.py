@@ -37,23 +37,30 @@ class UserTestCase(TestCase):
         self.client.login(username='testuser', password='password123')
 
         response = self.client.post(
-            reverse('users:update', args=[self.user.pk]),
-            {'first_name': 'Jerry',
-             'last_name': 'User',
-        })
-        self.assertRedirects(response, reverse("users:list"))
+            reverse('users:update', kwargs={'pk': self.user.pk}),
+            {
+                 'username': 'testuser',
+                 'first_name': 'Jerry',
+                 'last_name': 'User',
+            }
+        )
 
         self.user.refresh_from_db()
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(self.user.first_name, 'Jerry')
-        self.assertEqual(self.user.last_name, 'User')
+        self.assertRedirects(response, reverse('users:list'))
 
     def test_other_update(self):
         original_name = self.other_user.first_name
         response = self.client.post(
             reverse('users:update', args=[self.other_user.pk]),
-            {'first_name': 'Tuffy'}
+            {
+                'username': 'otheruser',
+                'first_name': 'Tuffy'
+            }
         )
 
+        self.assertEqual(response.status_code, 302)
         self.user.refresh_from_db()
         self.assertEqual(self.other_user.first_name, original_name)
         self.assertRedirects(response, reverse('users:list'))

@@ -28,13 +28,19 @@ class UserCreateView(SuccessMessageMixin, CreateView):
         return response
 
 
-class UserUpdateView(SuccessMessageMixin, UpdateView):
+class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = 'users/update.html'
     success_url = reverse_lazy('users:list')
     success_message = _('Пользователь успешно изменен')
 
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object != self.request.user:
+            messages.error(request, _('У вас нет прав для изменения другого пользователя.'))
+            return redirect(self.success_url)
+        return super().dispatch(request, *args, **kwargs)
 
 class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = User
