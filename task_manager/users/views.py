@@ -38,9 +38,13 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         if self.object != self.request.user:
-            messages.error(request, _('У вас нет прав для изменения другого пользователя.'))
+            messages.error(
+                request,
+                _('У вас нет прав для изменения другого пользователя.')
+            )
             return redirect(self.success_url)
         return super().dispatch(request, *args, **kwargs)
+
 
 class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = User

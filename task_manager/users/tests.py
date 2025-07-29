@@ -69,12 +69,19 @@ class UserTestCase(TestCase):
         self.client.login(username='testuser', password='password123')
 
         response = self.client.post(
-            reverse('users:delete', args=[self.user.pk])
+            reverse('users:delete', kwargs={'pk': self.user.pk})
         )
+        self.assertEqual(response.status_code, 200)
         self.assertRedirects(response, reverse('users:list'))
-        self.assertFalse(User.objects.filter(username='testuser').exists())
+        self.assertFalse(User.objects.filter(pk=self.user.pk).exists())
 
     def test_other_delete(self):
         self.client.login(username='testuser', password='password123')
+
+        response = self.client.post(
+            reverse('users:delete', kwargs={'pk': self.other_user.pk}),
+            follow=True
+        )
+        self.assertEqual(response.status_code, 200)
         self.client.post(reverse('users:delete', args=[self.other_user.pk]))
-        self.assertTrue(User.objects.filter(username='testuser').exists())
+        self.assertTrue(User.objects.filter(pk=self.other_user.pk).exists())
