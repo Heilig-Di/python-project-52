@@ -45,7 +45,7 @@ dev = [
     "uv>=0.1.45"
 ]
 
-[coverage:run]
-relative_files = True
-source = task_manager/
-branch = True
+[coverage-run]
+relative_files = "True"
+source = "task_manager/"
+branch = "True"

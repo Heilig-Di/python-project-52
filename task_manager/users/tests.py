@@ -1,5 +1,7 @@
 from django.test import TestCase
 from .models import User
+from task_manager.tasks.models import Task
+from task_manager.statuses.models import Status
 from django.urls import reverse
 
 
@@ -85,3 +87,21 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.client.post(reverse('users:delete', args=[self.other_user.pk]))
         self.assertTrue(User.objects.filter(pk=self.other_user.pk).exists())
+
+    def test_delete_user_with_tasks(self):
+        Task.objects.create(
+            title="Test Task",
+            description="Test",
+            author=self.user,
+            status=Status.objects.create(name="New")
+        )
+
+        self.client.login(username='testuser', password='password123')
+
+        response = self.client.post(
+            reverse('users:delete', kwargs={'pk': self.user.pk}),
+            follow=True
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(User.objects.filter(pk=self.user.pk).exists())
