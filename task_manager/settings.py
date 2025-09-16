@@ -104,7 +104,7 @@ DATABASES = {
 
 if os.getenv('DATABASE_URL'):
     DATABASES['default'] = dj_database_url.config(conn_max_age=600)
-
+print("DATABASE_URL:", os.getenv("DATABASE_URL"))
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
